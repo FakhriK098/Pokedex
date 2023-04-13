@@ -3,9 +3,9 @@ import React from 'react';
 import {Card, Search} from '../../components';
 import Constant from '../../assets/Contants';
 import {useNavigation} from '@react-navigation/native';
-import {fetchPokemon, getPokemonList} from '../../action/pokemon.action';
+import {getPokemonList, getSearchPokemon} from '../../action/pokemon.action';
 import {useRecoilState} from 'recoil';
-import {loadingState, pokemonListState} from '../../atoms';
+import {loadMoreState, loadingState, pokemonListState} from '../../atoms';
 import {Pokemon} from '../../types';
 
 const Home = () => {
@@ -14,6 +14,7 @@ const Home = () => {
   const [clicked, setClicked] = React.useState(false);
   const [pokemonList, setPokemonList] = useRecoilState(pokemonListState);
   const [loading, setLoading] = useRecoilState(loadingState);
+  const [loadMore, setLoadMore] = useRecoilState(loadMoreState);
   const [offset, setOffset] = React.useState(0);
 
   const renderData = () => {
@@ -29,12 +30,17 @@ const Home = () => {
   };
 
   const fetchMoreData = () => {
-    setOffset(offset + 8);
+    if (loadMore) {
+      setOffset(offset + 8);
+    }
   };
 
   const searchPokemon = () => {
-    fetchPokemon(`${Constant.BaseUrl}/${searchValue}`).then(res => {
-      console.log('resahh', res.data);
+    setLoading(true);
+    setLoadMore(false);
+    getSearchPokemon(searchValue).then(res => {
+      setLoading(false);
+      setPokemonList({data: [res.data]});
     });
   };
 

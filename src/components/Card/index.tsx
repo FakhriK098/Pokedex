@@ -71,5 +71,5 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     maxWidth: 240,
   },
-  container: {flex: 1, margin: 3},
+  container: {flex: 1 / 2, margin: 3},
 });

@@ -50,6 +50,11 @@ const initResult: Result = {
   moreLoading: false,
 };
 
+export const loadMoreState = atom<boolean>({
+  key: Constant.Key.loadMoreState,
+  default: true,
+});
+
 export const loadingState = atom<boolean>({
   key: Constant.Key.loadingState,
   default: false,

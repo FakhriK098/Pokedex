@@ -8,8 +8,8 @@ export const getPokemonList = async (offset: number) => {
   );
   const result: Pokemon[] = await Promise.all(
     resPoke.data.results.map(async (item): Promise<any> => {
-      const a: Pokemon = (await Axios.get(item.url)).data;
-      return a;
+      const pokemon: Pokemon = (await Axios.get(item.url)).data;
+      return pokemon;
     }),
   );
 
@@ -29,6 +29,18 @@ export const getPokemonList = async (offset: number) => {
   } else {
     return {data: finalResult, moreLoading: false};
   }
+};
+
+export const getSearchPokemon = async (name: string) => {
+  const resPokemon = await Axios.get(`${Constant.BaseUrl}/${name}`);
+  const result = (await Axios.get(resPokemon.data.species.url)).data;
+  const finalResult: Pokemon = {
+    ...resPokemon.data,
+    colors: {name: result.color.name},
+    evolutionChain: {url: result.evolution_chain.url},
+  };
+
+  return {data: finalResult, isLoading: false};
 };
 
 export const fetchPokemon = async url => {
