@@ -2,18 +2,27 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import TextValue from '../TextValue';
 import Constant from '../../assets/Contants';
+import {useRecoilValue} from 'recoil';
+import {pokemonState} from '../../atoms';
 
 const About = () => {
-  const data = Constant.Dummy.PokemonAbout;
+  const data = useRecoilValue(pokemonState);
+  const abilities = data.abilities.map(item => {
+    return item.ability.name;
+  });
+  const sprites = [
+    data.sprites.front_default,
+    data.sprites.back_default,
+    data.sprites.front_shiny,
+  ];
   return (
     <View style={styles.page}>
-      <TextValue label={'Species'} value={data.species} />
       <TextValue label={'Height'} value={data.height.toString()} />
       <TextValue label={'Weight'} value={data.weight.toString()} />
-      <TextValue label={'Abilities'} value={data.abilities.toString()} />
+      <TextValue label={'Abilities'} value={abilities.toString()} />
       <Text style={styles.title}>Sprites</Text>
       <View style={styles.contentSprites}>
-        {Constant.Dummy.PokemenSprites.map((item, index) => {
+        {sprites.map((item, index) => {
           return (
             <Image source={{uri: item}} style={styles.image} key={index} />
           );

@@ -10,32 +10,44 @@ import React from 'react';
 import Constant from '../../assets/Contants';
 import {IcBack} from '../../assets';
 import {DetailTabSection, Type} from '../../components';
+import {useNavigation} from '@react-navigation/native';
+import {useRecoilState} from 'recoil';
+import {pokemonState} from '../../atoms';
 
-type DetailProps = {
-  color: string;
-};
+const Detail = ({route}) => {
+  const navigation = useNavigation();
+  const item = route.params;
+  const [color] = React.useState(item.colors.name);
+  const [pokemon, setPokemon] = useRecoilState(pokemonState);
 
-const Detail = ({color = 'red'}: DetailProps) => {
+  React.useEffect(() => {
+    setPokemon(item);
+  }, []);
+
   return (
     <View style={styles.page}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.background(color)} />
-        <TouchableOpacity style={styles.back}>
+        <TouchableOpacity
+          style={styles.back(color)}
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <IcBack />
         </TouchableOpacity>
         <View style={styles.header}>
           <View>
-            <Text style={styles.title}>babkcasbck</Text>
+            <Text style={styles.title(color)}>{item.name}</Text>
             <View style={{flexDirection: 'row', marginTop: 10}}>
-              {Constant.Dummy.PokemonTypes.map(item => {
-                return <Type type={item} size={'medium'} />;
+              {item.types.map(item => {
+                return <Type type={item.type.name} size={'medium'} />;
               })}
             </View>
           </View>
-          <Text style={styles.idText}>bcaback</Text>
+          <Text style={styles.idText(color)}>#{item.id}</Text>
         </View>
         <Image
-          source={{uri: Constant.Dummy.PokemonImage}}
+          source={{uri: item.sprites.other['official-artwork'].front_default}}
           style={styles.image}
         />
         <View style={styles.content}>
@@ -57,28 +69,30 @@ const styles = StyleSheet.create({
     height: 700,
     position: 'absolute',
   }),
-  back: {
+  back: color => ({
     width: 30,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 20,
     marginTop: 20,
-  },
+    backgroundColor: color === 'white' ? 'black' : Constant.Color.transparant,
+    borderRadius: 30,
+  }),
   header: {
     padding: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  idText: {
+  idText: color => ({
     marginTop: 25,
-    color: Constant.Color.White,
+    color: color === 'white' ? Constant.Color.Black : Constant.Color.White,
     fontSize: 14,
-  },
-  title: {
-    color: Constant.Color.White,
+  }),
+  title: color => ({
+    color: color === 'white' ? Constant.Color.Black : Constant.Color.White,
     fontSize: 36,
-  },
+  }),
   image: {
     width: 200,
     height: 200,

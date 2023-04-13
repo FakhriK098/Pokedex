@@ -37,7 +37,6 @@ const DetailTabSection = () => {
     {key: 1, title: 'Evolution'},
     {key: 2, title: 'Moves'},
   ]);
-  console.log('kkk', layout.height);
   return (
     <TabView
       navigationState={{index, routes}}

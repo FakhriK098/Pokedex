@@ -10,7 +10,7 @@ type ChainType = {
 type EvolutionChainProps = {
   evolutionFrom: ChainType;
   evolutionTo: ChainType;
-  level: number;
+  level: string;
 };
 
 const EvolutionChain = ({

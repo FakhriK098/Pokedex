@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginEnd: 4,
     backgroundColor: Constant.Color.White,
+    elevation: 10,
   },
   title: size => ({
     color: Constant.Color.Black,

@@ -8,6 +8,7 @@ const Color = {
   White: '#FFFFFF',
   grey_D7D7D7: '#D7D7D7',
   grey_8D92A3: '#8D92A3',
+  transparant: '#ffffff00',
 };
 
 const Dummy = {
@@ -31,10 +32,25 @@ const Dummy = {
   },
 };
 
+const Key = {
+  pokemonListState: 'pokemonListState',
+  pokemonState: 'pokemonState',
+  pokemonListStatsState: 'pokemonListStatsState',
+  fetchPokemon: 'fetchPokemon',
+  pokemonEvolutionChain: 'pokemonEvolutionChain',
+};
+
+const BaseUrl = 'https://pokeapi.co/api/v2/pokemon';
+const BaseUrlImg =
+  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/';
+
 const Constant = {
   Router,
   Color,
   Dummy,
+  Key,
+  BaseUrl,
+  BaseUrlImg,
 } as const;
 
 export default Constant;
