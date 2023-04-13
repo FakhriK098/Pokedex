@@ -38,6 +38,7 @@ const Key = {
   pokemonListStatsState: 'pokemonListStatsState',
   fetchPokemon: 'fetchPokemon',
   pokemonEvolutionChain: 'pokemonEvolutionChain',
+  loadingState: 'loadingState',
 };
 
 const BaseUrl = 'https://pokeapi.co/api/v2/pokemon';

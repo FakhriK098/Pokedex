@@ -3,47 +3,51 @@ import React from 'react';
 import {Card, Search} from '../../components';
 import Constant from '../../assets/Contants';
 import {useNavigation} from '@react-navigation/native';
-import {getPokemonList} from '../../action/pokemon.action';
+import {fetchPokemon, getPokemonList} from '../../action/pokemon.action';
 import {useRecoilState} from 'recoil';
-import {pokemonListState} from '../../atoms';
+import {loadingState, pokemonListState} from '../../atoms';
+import {Pokemon} from '../../types';
 
 const Home = () => {
+  const navigation = useNavigation();
   const [searchValue, setSearchValue] = React.useState('');
   const [clicked, setClicked] = React.useState(false);
-  const navigation = useNavigation();
   const [pokemonList, setPokemonList] = useRecoilState(pokemonListState);
+  const [loading, setLoading] = useRecoilState(loadingState);
   const [offset, setOffset] = React.useState(0);
 
   const renderData = () => {
-    setPokemonList(prevRes => ({
-      ...prevRes,
-      onLoading: true,
-    }));
+    setLoading(true);
     getPokemonList(offset).then(res => {
-      setPokemonList(res);
+      setLoading(false);
+      const newPokemon: Pokemon[] = res.data;
+      setPokemonList(prevPok => ({
+        ...prevPok,
+        data: [...pokemonList.data, ...newPokemon],
+      }));
     });
   };
 
   const fetchMoreData = () => {
-    setPokemonList(prevRes => ({
-      ...prevRes,
-      moreLoading: true,
-    }));
-    setOffset(offset + 1);
-    getPokemonList(offset).then(res => {
-      setPokemonList(prevRes => ({
-        ...prevRes,
-        res,
-      }));
+    setOffset(offset + 8);
+  };
+
+  const searchPokemon = () => {
+    fetchPokemon(`${Constant.BaseUrl}/${searchValue}`).then(res => {
+      console.log('resahh', res.data);
     });
   };
 
   React.useEffect(() => {
     renderData();
-  }, []);
+  }, [offset]);
 
   const renderFooter = () => {
-    return <View>{pokemonList.moreLoading && <ActivityIndicator />}</View>;
+    return (
+      <View style={styles.containerLoading}>
+        {loading && <ActivityIndicator size={'large'} />}
+      </View>
+    );
   };
 
   return (
@@ -53,6 +57,7 @@ const Home = () => {
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         setClicked={setClicked}
+        onSubmit={searchPokemon}
       />
       <View style={styles.content}>
         {pokemonList.isLoading ? (
@@ -70,14 +75,14 @@ const Home = () => {
                 onPress={() => {
                   navigation.navigate(Constant.Router.Detail, item);
                 }}
-                key={index}
+                key={item.name}
                 color={item.colors.name}
               />
             )}
             ListFooterComponent={renderFooter}
             numColumns={2}
             keyExtractor={(item, index) => index.toString()}
-            onEndReachedThreshold={1}
+            onEndReachedThreshold={0}
             onEndReached={fetchMoreData}
           />
         )}
@@ -97,5 +102,8 @@ const styles = StyleSheet.create({
   content: {
     marginTop: 20,
     marginBottom: 50,
+  },
+  containerLoading: {
+    marginVertical: 10,
   },
 });

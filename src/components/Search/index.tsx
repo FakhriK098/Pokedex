@@ -8,6 +8,7 @@ type SearchProps = {
   searchValue: string;
   setSearchValue: Function;
   setClicked: Function;
+  onSubmit: Function;
 };
 
 const Search = ({
@@ -15,6 +16,7 @@ const Search = ({
   searchValue,
   setSearchValue,
   setClicked,
+  onSubmit,
 }: SearchProps) => {
   return (
     <View style={styles.container(clicked)}>
@@ -28,6 +30,7 @@ const Search = ({
           onFocus={() => {
             setClicked(true);
           }}
+          onSubmitEditing={value => onSubmit(value)}
         />
         {clicked && searchValue.length > 0 && (
           <TouchableOpacity

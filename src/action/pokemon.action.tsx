@@ -2,9 +2,9 @@ import Axios from 'axios';
 import Constant from '../assets/Contants';
 import {Pokemon} from '../types';
 
-export const getPokemonList = async offset => {
+export const getPokemonList = async (offset: number) => {
   const resPoke = await Axios.get(
-    `${Constant.BaseUrl}?limit=20&offset=${offset}`,
+    `${Constant.BaseUrl}?limit=8&offset=${offset}`,
   );
   const result: Pokemon[] = await Promise.all(
     resPoke.data.results.map(async (item): Promise<any> => {

@@ -50,6 +50,11 @@ const initResult: Result = {
   moreLoading: false,
 };
 
+export const loadingState = atom<boolean>({
+  key: Constant.Key.loadingState,
+  default: false,
+});
+
 export const pokemonListState = atom<Result>({
   key: Constant.Key.pokemonListState,
   default: initResult,
