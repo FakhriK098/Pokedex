@@ -4,7 +4,7 @@ import Constant from '../../assets/Contants';
 
 type TextValueProps = {
   label: string;
-  value: string;
+  value: string | number;
 };
 
 const TextValue = ({label, value}: TextValueProps) => {

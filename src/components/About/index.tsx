@@ -17,9 +17,9 @@ const About = () => {
   ];
   return (
     <View style={styles.page}>
-      <TextValue label={'Height'} value={data.height.toString()} />
-      <TextValue label={'Weight'} value={data.weight.toString()} />
-      <TextValue label={'Abilities'} value={abilities.toString()} />
+      <TextValue label={'Height'} value={data.height} />
+      <TextValue label={'Weight'} value={data.weight} />
+      <TextValue label={'Abilities'} value={abilities} />
       <Text style={styles.title}>Sprites</Text>
       <View style={styles.contentSprites}>
         {sprites.map((item, index) => {

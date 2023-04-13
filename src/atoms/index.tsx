@@ -83,7 +83,7 @@ export const getEvolutionChain = selector({
       while (hasEvolution) {
         const evol: Evolution = {
           evolutionFrom: evolve.species.name,
-          level: evolve.evolves_to[0].evolution_details[0].min_level.toString(),
+          level: evolve.evolves_to[0].evolution_details[0].min_level,
           evolutionTo: evolve.evolves_to[0].species.name,
           evolutionImgFrom: createImgLink(0, evolve.species.url),
           evolutionImgTo: createImgLink(0, evolve.evolves_to[0].species.url),

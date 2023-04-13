@@ -51,7 +51,7 @@ export type Ability = {
 export type Evolution = {
   evolutionFrom: string;
   evolutionImgFrom: string;
-  level: string;
+  level: string | number;
   evolutionTo: string;
   evolutionImgTo: string;
 };

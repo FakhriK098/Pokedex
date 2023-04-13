@@ -24,7 +24,7 @@ const EvolutionChain = ({
         <Image source={{uri: evolutionFrom.image}} style={styles.image} />
         <Text style={styles.name}>{evolutionFrom.name}</Text>
       </View>
-      <Text style={styles.lavel}>Lvl {level}</Text>
+      <Text style={styles.lavel}>{level ? `Lvl ${level}` : '=>'}</Text>
       <View style={styles.content}>
         <Image source={{uri: evolutionTo.image}} style={styles.image} />
         <Text style={styles.name}>{evolutionTo.name}</Text>
