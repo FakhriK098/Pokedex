@@ -88,7 +88,7 @@ const Home = () => {
             ListFooterComponent={renderFooter}
             numColumns={2}
             keyExtractor={(item, index) => index.toString()}
-            onEndReachedThreshold={0}
+            onEndReachedThreshold={0.5}
             onEndReached={fetchMoreData}
           />
         )}
